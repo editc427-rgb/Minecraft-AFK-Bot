@@ -1,7 +1,6 @@
 const mineflayer = require('mineflayer');
 const config = require('./config.json');
 
-// Integrated your specific login password safely into the portal system
 const PROXY_PASSWORD = "8455930";
 
 const bot = mineflayer.createBot({
@@ -9,35 +8,37 @@ const bot = mineflayer.createBot({
   port: config.serverPort,
   username: config.botUsername,
   auth: 'offline',
-  version: config.version || "1.21.1", // FIXED: Locked to server version to prevent proxy disconnects
+  version: "1.21.1", // Kept for metadata framework checks
   viewDistance: config.botChunk
 });
 
+// FORCE PROTOCOL OVERRIDE: Directly locks network sockets to 1.21.1 (Protocol 767)
+bot.protocolVersion = 767;
+
 let movementPhase = 0;
 const STEP_INTERVAL = 1500;
-const STEP_SPEED    = 1;
 const JUMP_DURATION = 500;
 
 bot.on('spawn', () => {
   console.log(`📡 Connected to Proxy. Attempting authentication...`);
 
-  // 1. Send the login password to the proxy server after 2 seconds
+  // 1. Send the login password to the proxy server after 2.5 seconds
   setTimeout(() => {
     bot.chat(`/login ${PROXY_PASSWORD}`);
     console.log(`🔑 Sent login command to proxy server.`);
-  }, 2000);
+  }, 2500);
 
-  // 2. Transfer from proxy hub into the SMP after 5 seconds
+  // 2. Transfer from proxy hub into the SMP after 6 seconds
   setTimeout(() => {
     bot.chat('/smp'); 
     console.log(`🚀 Sending /smp command to cross proxy portal.`);
-  }, 5000);
+  }, 6000);
 
   // 3. Initiate standard anti-AFK movements once safely past proxy portal
   setTimeout(() => {
     bot.setControlState('sneak', true);
     console.log(`✅ ${config.botUsername} is Ready in the AFK Zone!`);
-  }, 8000);
+  }, 9000);
 
   setTimeout(movementCycle, STEP_INTERVAL);
 });
@@ -72,13 +73,13 @@ function movementCycle() {
   }
 
   movementPhase = (movementPhase + 1) % 4;
-
   setTimeout(movementCycle, STEP_INTERVAL);
 }
 
 bot.on('error', (err) => {
-  console.error('⚠️ Error:', err);
+  console.error('⚠️ Error Logged:', err.message || err);
 });
-bot.on('end', () => {
-  console.log('⛔️ Bot Disconnected!');
+
+bot.on('end', (reason) => {
+  console.log(`⛔️ Bot Disconnected! Reason: ${reason || 'Unknown Protocol Halt'}`);
 });
