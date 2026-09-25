@@ -6,19 +6,34 @@ const PROXY_PASSWORD = "8455930";
 const bot = mineflayer.createBot({
   host: config.serverHost,
   port: config.serverPort,
-  username: config.botUsername,
-  // FIXED: Removed 'offline' auth to allow premium proxy handshake verification
-  auth: 'microsoft', 
+  username: "patt070", // Double locking your cracked username
+  auth: 'offline',     // Kept offline since it's cracked
   version: "1.21.1",
   viewDistance: config.botChunk
 });
 
-// Force network protocol alignment to 1.21.1
+// Bypasses proxy filters by locking the network stream protocol to 1.21.1
 bot.protocolVersion = 767;
 
 let movementPhase = 0;
 const STEP_INTERVAL = 1500;
 const JUMP_DURATION = 500;
+
+// FIX: Automatically sends client settings packet immediately to stop proxy kicks
+bot.on('login', () => {
+  if (bot._client) {
+    bot._client.write('settings', {
+      locale: 'en_US',
+      viewDistance: 1,
+      chatFlags: 0,
+      chatColors: true,
+      skinParts: 127,
+      mainHand: 1,
+      enableTextFiltering: false,
+      allowServerListings: true
+    });
+  }
+});
 
 bot.on('spawn', () => {
   console.log(`📡 Connected to Proxy. Attempting authentication...`);
@@ -38,7 +53,7 @@ bot.on('spawn', () => {
   // 3. Initiate standard anti-AFK movements once safely past proxy portal
   setTimeout(() => {
     bot.setControlState('sneak', true);
-    console.log(`✅ ${config.botUsername} is Ready in the AFK Zone!`);
+    console.log(`✅ patt070 is Ready in the AFK Zone!`);
   }, 9000);
 
   setTimeout(movementCycle, STEP_INTERVAL);
@@ -82,5 +97,5 @@ bot.on('error', (err) => {
 });
 
 bot.on('end', (reason) => {
-  console.log(`⛔️ Bot Disconnected! Reason: ${reason || 'Unknown Protocol Halt'}`);
+  console.log(`%c⛔️ Bot Disconnected! Reason: ${reason || 'Unknown Protocol Halt'}`, "color: red");
 });
