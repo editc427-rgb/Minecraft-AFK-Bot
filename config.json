@@ -2,5 +2,6 @@
   "serverHost": "qfiesmp.in",
   "serverPort": 25565,
   "botUsername": "patt070",
-  "botChunk": 1
+  "botChunk": 1,
+  "version": "1.21.1"
 }
