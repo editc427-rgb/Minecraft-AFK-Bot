@@ -9,7 +9,7 @@ const bot = mineflayer.createBot({
   port: config.serverPort,
   username: config.botUsername,
   auth: 'offline',
-  version: false,
+  version: config.version || "1.21.1", // FIXED: Locked to server version to prevent proxy disconnects
   viewDistance: config.botChunk
 });
 
