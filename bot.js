@@ -7,12 +7,13 @@ const bot = mineflayer.createBot({
   host: config.serverHost,
   port: config.serverPort,
   username: config.botUsername,
-  auth: 'offline',
-  version: "1.21.1", // Kept for metadata framework checks
+  // FIXED: Removed 'offline' auth to allow premium proxy handshake verification
+  auth: 'microsoft', 
+  version: "1.21.1",
   viewDistance: config.botChunk
 });
 
-// FORCE PROTOCOL OVERRIDE: Directly locks network sockets to 1.21.1 (Protocol 767)
+// Force network protocol alignment to 1.21.1
 bot.protocolVersion = 767;
 
 let movementPhase = 0;
