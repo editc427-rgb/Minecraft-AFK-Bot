@@ -1,9 +1,8 @@
 const mineflayer = require('mineflayer');
 const config = require('./config.json');
 
-// SECURITY TIP: You can set a environment variable named BOT_PASSWORD on Render, 
-// or simply replace "YOUR_ACTUAL_PASSWORD_HERE" with your password.
-const PROXY_PASSWORD = process.env.BOT_PASSWORD || "YOUR_ACTUAL_PASSWORD_HERE";
+// Integrated your specific login password safely into the portal system
+const PROXY_PASSWORD = "8455930";
 
 const bot = mineflayer.createBot({
   host: config.serverHost,
@@ -28,10 +27,10 @@ bot.on('spawn', () => {
     console.log(`🔑 Sent login command to proxy server.`);
   }, 2000);
 
-  // 2. Transfer from proxy hub into survival server after 5 seconds
+  // 2. Transfer from proxy hub into the SMP after 5 seconds
   setTimeout(() => {
-    bot.chat('/server survival'); // Change 'survival' if QfieSMP uses a different name like '/anarchy' or '/q survival'
-    console.log(`🚀 Sending transfer command to cross proxy portal.`);
+    bot.chat('/smp'); 
+    console.log(`🚀 Sending /smp command to cross proxy portal.`);
   }, 5000);
 
   // 3. Initiate standard anti-AFK movements once safely past proxy portal
