@@ -1,6 +1,6 @@
 {
-  "serverHost": "example.aternos.me",
-  "serverPort": 12345,
-  "botUsername": "MyBot",
-  "botChunk": 1
+  "ip": "qfiesmp.in",
+  "port": 25565,
+  "username": "patt070",
+  "version": "1.21.11"
 }
