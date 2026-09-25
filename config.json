@@ -1,6 +1,6 @@
 {
-  "ip": "qfiesmp.in",
-  "port": 25565,
-  "username": "patt070",
-  "version": "1.21.11"
+  "serverHost": "qfiesmp.in",
+  "serverPort": 25565,
+  "botUsername": "patt070",
+  "botChunk": 1
 }
